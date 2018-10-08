@@ -16,5 +16,5 @@ app.listen(port, function() {
 // Gestion des URI
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname + "/CERIGame/index.html"));
-  console.log(res);
+
 });
