@@ -17,5 +17,4 @@ app.listen(port, function() {
 app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname + "/CERIGame/index.html"));
   console.log(res);
-  console.log('test');
 });
