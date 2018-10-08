@@ -4,11 +4,11 @@
 }
 
 body {
-    background: #9cecfb;
+    background: #b7a1fe;
     /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #0052d4, #65c7f7, #9cecfb);
+    background: -webkit-linear-gradient(to right, #9232fe, #9a75fb, #b7a1fe);
     /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #0052d4, #65c7f7, #9cecfb);
+    background: linear-gradient(to right, #9232fe, #9a75fb, #b7a1fe);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
