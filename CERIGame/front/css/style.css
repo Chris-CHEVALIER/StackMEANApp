@@ -4,8 +4,8 @@
 }
 
 body {
-    width: 100wh;
-    height: 90vh;
+    width: 100%;
+    height: 90%;
     color: #fff;
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
@@ -50,6 +50,27 @@ body {
     }
 }
 
+.bg-image {
+    background: linear-gradient(
+            rgba(12, 155, 250, 0.678),
+            rgba(12, 87, 250, 0.678)
+        ),
+        url(../images/card-background.jpg);
+    position: absolute;
+    width: 101%;
+    height: 101%;
+    background-size: cover;
+    left: -2px;
+    top: -2px;
+    opacity: 0.45;
+}
+
+.card {
+    overflow: hidden;
+    border: 0 !important;
+    border-radius: 8px !important;
+}
+
 .card-signin {
     position: relative;
     top: 50%;
@@ -59,12 +80,15 @@ body {
 }
 
 .card-signin .card-title {
+    color: white;
     margin-bottom: 2rem;
     font-weight: "bold";
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    letter-spacing: 0.2rem;
 }
 
 .card-signin .card-body {
+    z-index: 1;
     padding: 2rem;
 }
 
@@ -73,12 +97,18 @@ body {
 }
 
 .form-signin .btn {
-    font-size: 80%;
+    color: white;
+    font-size: 100%;
     border-radius: 5rem;
-    letter-spacing: 0.1rem;
+    letter-spacing: 0.3rem;
     font-weight: bold;
-    padding: 1rem;
+    padding: 10px;
     transition: all 0.2s;
+}
+
+.form-signin .btn:hover {
+    background-color: #35a4ee;
+    border-color: #35c3ee;
 }
 
 .form-label-group {
@@ -140,6 +170,6 @@ body {
 .form-label-group input:not(:placeholder-shown) ~ label {
     padding-top: calc(var(--input-padding-y) / 3);
     padding-bottom: calc(var(--input-padding-y) / 3);
-    font-size: 10px;
+    font-size: 11px;
     color: #777;
 }
