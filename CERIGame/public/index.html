@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mainApp">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.9/angular-material.min.css">
+  <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="css/nprogress.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>CERIGame</title>
+</head>
+
+<body>
+
+  <div ng-view></div>
+
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.5/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.4/angular-messages.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.10/angular-material.min.js"></script>
+  <script src="https://code.angularjs.org/1.7.5/angular-route.min.js" charset="utf-8"></script>
+  <script src="app/controllers/mainController.js" charset="utf-8"></script>
+
+  <script type="text/javascript">
+    NProgress.configure({
+      template: '<div class="bar" role="bar"><div class="peg"></div></div>',
+      trickle: false
+    });
+    NProgress.start();
+    NProgress.done();
+  </script>
+</body>
+
+</html>

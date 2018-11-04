@@ -1,0 +1,30 @@
+<style media="screen">
+  md-progress-circular path {
+    stroke: #42bd41 !important;
+  }
+</style>
+<div class="row">
+  <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+    <div class="card card-signin my-5">
+      <div class="bg-image"></div>
+      <div class="card-body">
+        <h5 class="card-title text-center">CONNEXION</h5>
+        <div class="form-label-group">
+          <input name="login" type="text" ng-model="usr" id="login" class="form-control" placeholder="Login" required autofocus>
+          <label for="login">Login</label>
+        </div>
+        <div class="form-label-group">
+          <input name="pwd" type="password" ng-model="pwd" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
+          <label for="inputPassword">Mot de passe</label>
+        </div>
+        <hr class="my-4">
+        <button style="text-align:center" ng-click="login()" class="btn btn-lg btn-outline-primary btn-block text-uppercase" type="submit">
+          Connexion
+           <div layout="row" ng-show="trylogin" layout-sm="column" layout-align="space-around">
+            <md-progress-circular md-mode="indeterminate" class="md-accent" md-diameter="40"></md-progress-circular>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

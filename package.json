@@ -17,6 +17,7 @@
     "express-session": "^1.15.6",
     "mongodb": "^3.1.6",
     "mongoose": "^5.3.1",
+    "ngprogress": "^1.1.1",
     "nodemon": "^1.18.4",
     "pg": "^7.4.3",
     "sha1": "^1.1.1",
