@@ -10,7 +10,7 @@
   <section layout="row" flex>
     <md-sidenav class="md-sidenav-left" md-component-id="closeEventsDisabled" md-whiteframe="4" md-disable-close-events>
       <md-toolbar class="md-theme-indigo">
-        <h1 class="md-toolbar-tools">{{user.name}}</h1>
+        <h1 class="md-toolbar-tools">{{user.name}}/{{user.date}}</h1>
       </md-toolbar>
 
       <md-content layout-margin>
@@ -22,6 +22,9 @@
             <md-divider ng-if="!$last"></md-divider>
           </md-list-item>
         </md-list>
+        <md-button ng-click="logout()" class="md-accent">
+          Déconnection
+        </md-button>
         <md-button ng-click="toggleSidenav()" class="md-accent">
           Fermer
         </md-button>

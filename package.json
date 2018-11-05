@@ -15,7 +15,7 @@
     "connect-mongodb-session": "^2.0.3",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "mongodb": "^3.1.6",
+    "mongodb": "^3.1.8",
     "mongoose": "^5.3.1",
     "ngprogress": "^1.1.1",
     "nodemon": "^1.18.4",

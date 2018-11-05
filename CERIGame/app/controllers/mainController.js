@@ -16,10 +16,8 @@ mainApp.config(function($routeProvider) {
     })
 })
 mainApp.factory("Session", function() {
-  var sessionService = {
 
-    // Instantiate data when service
-    // is loaded
+  var sessionService = {
     _user: JSON.parse(localStorage.getItem('session.user')),
     _accessToken: JSON.parse(localStorage.getItem('session.accessToken')),
     getUser: function() {
@@ -48,23 +46,17 @@ mainApp.factory("Session", function() {
   }
   return sessionService
 })
-mainApp.factory('UserFactory', function() {
-  var factory = {
-    userinfo: {
-      name: "",
-      lastconnec: undefined
-    },
-    setUser: function(user) {
-      factory.userinfo = user
-    },
-    getUser: function() {
-      return factory.userinfo
-    }
-  }
-  return factory
-})
-mainApp.controller('menuCtrl', ["$scope", "UserFactory", "Session", function($scope, UserFactory, Session) {
+mainApp.controller('menuCtrl', ["$scope", "$http", "$location", "Session", "$mdToast", function($scope, $http, $location, Session, $mdToast) {
   $scope.user = Session.getUser()
+  $scope.logout = function() {
+    $http.get('/logout').then(() => {
+      $mdToast.show($mdToast.simple().textContent('Vous êtes maintenant déconnecté').position("top right"));
+      Session.setUser({})
+      $location.path('/')
+    })
+  }
+
+
   $scope.menuItems = [{
     caption: "Accueil",
     link: "#!/home"
@@ -85,9 +77,9 @@ mainApp.controller('menuCtrl', ["$scope", "UserFactory", "Session", function($sc
     link: "#!/account"
   }]
 }])
-mainApp.controller('homeCtrl', ["$scope", "$http", "$location", "$mdSidenav", "UserFactory", function($scope, $http, $location, $mdSidenav, UserFactory) {
+mainApp.controller('homeCtrl', ["$scope", "$http", "$location", "$mdSidenav", "Session", function($scope, $http, $location, $mdSidenav, Session) {
   $scope.toggleSidenav = buildToggler('closeEventsDisabled');
-  $scope.user = UserFactory.getUser()
+  $scope.user = Session.getUser()
 
   function buildToggler(componentId) {
     return function() {
@@ -95,8 +87,12 @@ mainApp.controller('homeCtrl', ["$scope", "$http", "$location", "$mdSidenav", "U
     };
   }
 }])
-mainApp.controller('loginCtrl', ["$scope", "$http", "$location", "UserFactory", "Session", function($scope, $http, $location, UserFactory, Session) {
+mainApp.controller('loginCtrl', ["$scope", "$http", "$location", "Session", "$mdToast", function($scope, $http, $location, Session, $mdToast) {
+
+  if (Session.getUser() != undefined && Session.getUser().name !== undefined)
+    $location.path('/home')
   $scope.trylogin = false
+
   $scope.login = function() {
     if ($scope.usr != "" && $scope.pwd != "") {
       $scope.trylogin = true
@@ -105,16 +101,25 @@ mainApp.controller('loginCtrl', ["$scope", "$http", "$location", "UserFactory", 
         pwd: $scope.pwd
       }).then((res) => {
         $scope.trylogin = false
-        if (res.data.status === 200) {
-          UserFactory.setUser({
-            name: $scope.usr
-          })
-          Session.setUser({
-            name: $scope.usr
-          })
-          $location.path('/home')
-        }
+        switch (res.data.status) {
+          case 200:
+            $mdToast.show($mdToast.simple().textContent('Vous êtes maintenant connecté').position("top right"));
+            Session.setUser({
+              name: $scope.usr,
+              date: res.data.date
+            })
+            $location.path('/home')
+            break;
+          case 500:
+            $mdToast.show($mdToast.simple().textContent('Identifiants incorrects, veuillez réessayer').position("top right"));
+            break;
+          case 501:
+            $mdToast.show($mdToast.simple().textContent('Utilisateur déjà connecté').position("top right"));
+            break;
+          default:
+            break;
 
+        }
       })
     }
   }
