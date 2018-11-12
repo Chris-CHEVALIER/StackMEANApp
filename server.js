@@ -23,6 +23,7 @@ app.use("/css", express.static(__dirname + "/CERIGame/css"));
 app.use("/images", express.static(__dirname + "/CERIGame/images"));
 app.use("/scripts", express.static(__dirname + "/CERIGame/scripts"));
 app.use("/app", express.static(__dirname + "/CERIGame/app"));
+app.use("/modules", express.static(__dirname + "node_modules/"));
 app.use(express.static(__dirname + "/CERIGame/public"))
 app.use(bodyParser.json())
 app.use(session({
@@ -53,11 +54,16 @@ app.listen(port, function() {
 
 // Gestion des URI
 
-
-app.get("/dateUser", function(req, res) {
-  let date = req.session
-  console.log(date);
-  res.send("prout")
+app.post('/getGamePlayed', function(req, res) {
+  pool.connect((err, client, done) => {
+    if (err) console.log("error " + err.stack);
+    else {
+      let sql = "select * from fredouil.historique where id_users = '" + req.body.id + "';";
+      client.query(sql, (err, result) => {
+        res.json(result)
+      })
+    }
+  })
 })
 
 app.get("/logout", (req, res) => {
@@ -88,42 +94,57 @@ function formatDate(date) {
   return day + ' ' + monthNames[monthIndex] + ' ' + year;
 }
 
+function getLastRecord(callback) {
+  MongoClient.connect(mongoUrl, function(err, client) {
+    client.db("db").collection("MySuperSession" + port).find().limit(1).sort({
+      $natural: -1
+    }).toArray().then((data) => {
+      console.log("nani")
+      console.log(data);
+      callback(data)
+    })
+  })
+}
+
+app.get('/prout', (req, res) => {
+  getLastRecord((data) => {
+    res.json(data)
+  })
+})
+
 app.post("/login", (req, res) => {
   pool.connect((err, client, done) => {
     if (err) console.log("error " + err.stack);
     else {
-      // 1234
       let sql = "select * from fredouil.users where identifiant='" + req.body.usr + "' and motpasse='" + sha1(req.body.pwd) + "';";
-
       client.query(sql, (err, result) => {
         if (err || result.rows.length === 0) {
           res.send({
             status: 500
           })
-        } else if (result.rows[0].statut === 1) {
-          res.send({
-            status: 501
-          })
         } else {
           sql = "update fredouil.users set statut = 1 where identifiant='" + req.body.usr + "';";
           client.query(sql, (e, r) => {
-            MongoClient.connect(mongoUrl, function(err, client) {
-              client.db("db").collection("MySuperSession" + port).find().limit(1).sort({
-                $natural: -1
-              }).toArray().then((data) => {
-                req.session.isConnected = true
-                req.session.username = req.body.usr
-                req.session.date = new Date()
-                req.session.save()
-                res.send({
-                  date: formatDate(data[0].session.date),
-                  status: 200
-                })
-                client.close();
-              })
-            });
-
-          })
+            req.session.isConnected = true
+            req.session._id = result.rows[0].id
+            req.session.username = req.body.usr
+            req.session.lastname = result.rows[0].nom
+            req.session.prename = result.rows[0].prenom
+            req.session.bday = result.rows[0].date_de_naissance
+            req.session.avatar = result.rows[0].avatar
+            req.session.date = new Date()
+            req.session.save()
+            res.send({
+              name: req.body.usr,
+              date: formatDate(req.session.date),
+              id: result.rows[0].id,
+              prenom: result.rows[0].prenom,
+              nom: result.rows[0].nom,
+              bday: result.rows[0].date_de_naissance,
+              avatar: result.rows[0].avatar,
+              status: 200
+            })
+          });
         }
       })
     }

@@ -1,0 +1,63 @@
+<div ng-include="'views/menu.html'"></div>
+<md-content flex layout-padding>
+  <div layout="column" layout-align="top center">
+    <div layout="row" layout-wrap>
+      <h2>Historique</h2>
+    </div>
+    <md-content>
+      <md-tabs md-dynamic-height md-border-bottom>
+        <md-tab label="Parties">
+          <md-content class="md-padding">
+            <md-progress-linear md-mode="query" ng-disabled="games.length"></md-progress-linear>
+            <table style="text-align:center" class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Classement</th>
+                  <th scope="col">Score</th>
+                  <th scope="col">Nombre de réponses</th>
+                  <th scope="col">Temps</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="game in games | orderBy:'-score'">
+                  <th scope="row">{{$index}}</th>
+                  <td>{{game.score}}</td>
+                  <td>{{game.nbreponse}}</td>
+                  <td>{{game.temps}}</td>
+                  <td>{{game.date}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </md-content>
+        </md-tab>
+        <md-tab label="Défis">
+          <md-content class="md-padding">
+            <table class="table table-striped">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Classement</th>
+                  <th scope="col">Score</th>
+                  <th scope="col">Adversaire</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="challenge in challenges | orderBy:'-score'">
+                  <th scope="row">{{$index}}</th>
+                  <td>{{challenge.score}}</td>
+                  <td>{{challenge.opponent}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </md-content>
+        </md-tab>
+      </md-tabs>
+    </md-content>
+  </div>
+
+</md-content>
+
+<script type="text/javascript">
+  NProgress.start();
+  NProgress.done();
+</script>

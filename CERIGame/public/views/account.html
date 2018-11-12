@@ -1,0 +1,44 @@
+<div ng-include="'views/menu.html'"></div>
+
+<div class="container">
+  <div class="row profile">
+    <div class="col-md-4">
+      <div class="profile-usertitle">
+        <div class="profile-sidebar">
+          <!-- SIDEBAR USERPIC -->
+          <div class="profile-userpic">
+            <img src="{{user.avatar}}" class="img-responsive" alt="">
+          </div>
+          <!-- END SIDEBAR USERPIC -->
+          <!-- SIDEBAR USER TITLE -->
+          <div class="profile-usertitle">
+            <div class="profile-usertitle-name">
+              {{user.name}}
+            </div>
+            <div class="profile-usertitle-job">
+              Dernière connexion le {{user.date}}
+            </div>
+          </div>
+          <!-- END SIDEBAR USER TITLE -->
+          <!-- SIDEBAR BUTTONS -->
+          <div class="profile-userbuttons">
+            <button type="button" class="btn btn-danger btn-sm" ng-hide="user">Défier</button>
+          </div>
+          <!-- END SIDEBAR BUTTONS -->
+          <!-- SIDEBAR MENU -->
+          <div class="profile-usertitle">
+            <div class="profile-usertitle-name">
+              {{user.statut}}
+            </div>
+          </div>
+        </div>
+        <!-- END MENU -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  NProgress.start();
+  NProgress.done();
+</script>
